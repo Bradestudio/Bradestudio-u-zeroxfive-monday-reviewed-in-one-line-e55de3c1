@@ -30,6 +30,13 @@ def main():
         sys.exit("entry line must be 1-199 characters, got %d" % len(line))
     if line != line.strip():
         sys.exit("entry line must not start or end with whitespace")
+    if "  " in line:
+        sys.exit("entry line must not contain double spaces")
+    if any(ord(ch) < 32 or ord(ch) == 127 for ch in line):
+        sys.exit("entry line must not contain control characters")
+    if len(line.split()) < 8:
+        sys.exit("entry line too short to land the review, got %d words"
+                 % len(line.split()))
     if not line.endswith("as a tip."):
         # The punch is Monday tipping itself with the unread emails:
         # it must never silently go missing from the line.
